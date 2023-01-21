@@ -1,0 +1,46 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+main {
+    color: #fff;
+    background-color: rgb(28, 36, 56);
+    padding-bottom: 2rem;
+}
+
+.issues {
+    padding: 3rem 5rem;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+}
+
+.issue__card {
+    padding: 2rem;
+    display: grid;
+    gap: 1rem;
+    border: 2px solid rgb(169, 205, 239);
+}
+
+.issue-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+p {
+    color: #fff;
+}
+
+.pagination {
+    position: relative;
+    padding: 1rem;
+}
+
+.pagination button {
+    color: #fff;
+    outline: 1px solid #fff;
+    margin: 0 0.25rem;
+}

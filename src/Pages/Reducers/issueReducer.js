@@ -19,6 +19,11 @@ const issueReducer = (state, action) => {
                 error: 'Opps! Something went wrong!!',
                 issues: [],
             };
+        case 'CHANGING_PAGE':
+            return {
+                ...state,
+                page: action.payload,
+            };
         default:
             return state;
     }

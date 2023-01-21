@@ -10,7 +10,7 @@ const Footer = () => {
             <Grid container p={10}>
                 <Grid item>
                     <Grid container alignItems="center">
-                        <GitHubIcon fontSize="large" />
+                        <GitHubIcon fontSize="large" sx={{ color: '#fff' }} />
                         <Typography
                             ml={2}
                             className="footer-year"

@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    display: flex;
+    gap: 0.5rem;
+    margin-right: 0.5rem;
+    color: #fff;
+}
+
+.done {
+    color: rgba(255, 255, 255, 0.5);
+    transition: color 0.4s ease;
+}
+
+.done:hover {
+    color: #fff;
+}
+
+.part-two {
+    width: 60%;
+}
+
+.filter__items {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.filter-item > button {
+    display: flex;
+    align-items: center;
+    border: none;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.5);
+    background: none;
+    cursor: pointer;
+    transition: color 0.4s ease;
+}
+
+.filter-item > button:hover {
+    color: #fff;
+}
