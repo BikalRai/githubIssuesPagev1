@@ -22,6 +22,7 @@ main {
     display: grid;
     gap: 1rem;
     border: 2px solid rgb(169, 205, 239);
+    box-shadow: 1px 1px 0px, -1px -1px 0px;
 }
 
 .issue-header {

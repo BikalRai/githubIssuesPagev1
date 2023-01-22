@@ -2,6 +2,9 @@ import axios from 'axios';
 import React, { useEffect, useReducer } from 'react';
 import { useParams } from 'react-router-dom';
 import { commentState, commentReducer } from '../Reducers/commentsReducer';
+import AdjustIcon from '@mui/icons-material/Adjust';
+import { calcDate } from '../../Utility/date';
+import './comment.css';
 
 const Comments = () => {
     const [singleIssue, dispatch] = useReducer(commentReducer, commentState);
@@ -27,18 +30,6 @@ const Comments = () => {
                 headers: { Authorization: `Bearer ${token}` },
             };
 
-            const { data } = commentsData.map((comment) =>
-                axios.post(
-                    `https://api.github.com/markdown`,
-                    {
-                        text: comment.body,
-                    },
-                    config
-                )
-            );
-
-            console.log(data, 'welcome!!!');
-
             const userPost = await axios.post(
                 `https://api.github.com/markdown`,
                 {
@@ -52,11 +43,15 @@ const Comments = () => {
             );
             dispatch({ type: 'GET_HTML_DATA', payload: userPost });
 
-            // commentsData.map(async (comment) => {
-            //     await axios.post(`https://api.github.com/markdown`, {
-            //         text: comment.body,
-            //     });
-            // });
+            // const { data } = singleIssue.comments.map((comment) =>
+            //     axios.post(
+            //         `https://api.github.com/markdown`,
+            //         {
+            //             text: comment.body,
+            //         },
+            //         config
+            //     )
+            // );
 
             console.log(userPost, 'user conts');
         } catch (error) {
@@ -71,13 +66,37 @@ const Comments = () => {
     }, []);
     return (
         <>
-            <div
-                dangerouslySetInnerHTML={{
-                    __html: singleIssue.userContent.data,
-                }}
-            />
+            <div className="comment__container">
+                <div className="comment-author">
+                    <h1>{`${singleIssue?.issue?.title} #${singleIssue?.issue?.number}`}</h1>
+                    <div className="author-heading">
+                        <button className="status">
+                            <AdjustIcon />
+                            <span>{singleIssue?.issue?.state}</span>
+                        </button>
+                        <span>{`${
+                            singleIssue?.issue?.user?.login
+                        } opened this issue ${calcDate(
+                            singleIssue?.issue?.created_at
+                        )} . ${singleIssue?.issue?.comments} comments`}</span>
+                    </div>
 
-            {/* <p color="#fff">{singleIssue.userContent.data}</p> */}
+                    <div className="author-stat">
+                        <img
+                            className="author-img"
+                            src={singleIssue?.issue?.user?.avatar_url}
+                            alt=""
+                        />
+                        <span>{`commented`}</span>
+                    </div>
+
+                    <div
+                        dangerouslySetInnerHTML={{
+                            __html: singleIssue?.userContent?.data,
+                        }}
+                    />
+                </div>
+            </div>
         </>
     );
 };

@@ -18,7 +18,7 @@ import './issue.css';
 const Issues = () => {
     const [issueData, dispatch] = useReducer(issueReducer, issueDetails);
 
-    const { page, rowsPerPage } = issueDetails;
+    const { page, rowsPerPage } = issueData;
 
     const getIssues = async () => {
         try {
@@ -38,7 +38,7 @@ const Issues = () => {
     //function to set page
     const handlePage = (e, newPage) => {
         console.log('i am changing!!', newPage);
-        dispatch({ type: 'CHANGING_PAGE', payload: newPage });
+        dispatch({ type: 'INCREMENT_PAGE', payload: newPage });
     };
 
     console.log(issueDetails.page, 'page');

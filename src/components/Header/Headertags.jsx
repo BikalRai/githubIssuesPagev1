@@ -29,7 +29,7 @@ const Headertags = () => {
                         <Chip label="Public" variant="outlined" color="info" />
                     </Grid>
                 </Grid>
-                <Grid item pr={10}>
+                <Grid item pt={10} pr={10}>
                     <ButtonGroup
                         variant="outlined"
                         aria-label="outlined button group"

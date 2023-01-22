@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.comment__container {
+    background: rgb(63, 102, 142);
+    max-width: 90%;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.author-heading {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.status {
+    background-color: rgb(23, 193, 23);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 2rem;
+    color: #fff;
+}
+
+.author-img {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 100%;
+    margin: 1rem 0;
+}

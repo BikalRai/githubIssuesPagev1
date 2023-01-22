@@ -4,6 +4,7 @@ const commentState = {
     issue: [],
     comments: [],
     userContent: [],
+    allComments: [],
 };
 
 const commentReducer = (state, action) => {
@@ -35,6 +36,13 @@ const commentReducer = (state, action) => {
                 loading: false,
                 error: 'Ooops! Something went wrong!',
                 userContent: action.payload,
+            };
+        case 'POST_TEXT_SUCCESS':
+            return {
+                ...state,
+                loading: false,
+                error: '',
+                allComments: action.payload,
             };
         default:
             return state;

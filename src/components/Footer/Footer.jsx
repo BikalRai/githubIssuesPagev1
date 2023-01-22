@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
     return (
         <>
-            <Grid container p={10}>
+            <Grid container p={10} position="static">
                 <Grid item>
                     <Grid container alignItems="center">
                         <GitHubIcon fontSize="large" sx={{ color: '#fff' }} />

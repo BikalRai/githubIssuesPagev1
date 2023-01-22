@@ -19,12 +19,19 @@ const issueReducer = (state, action) => {
                 error: 'Opps! Something went wrong!!',
                 issues: [],
             };
-        case 'CHANGING_PAGE':
+        case 'INCREMENT_PAGE':
             return {
                 ...state,
                 loading: false,
                 error: '',
                 page: action.payload,
+            };
+        case 'DECREASE_PAGE':
+            return {
+                ...state,
+                loading: false,
+                error: '',
+                page: state.page - action.value,
             };
         default:
             return state;
