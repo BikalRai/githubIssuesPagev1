@@ -11,6 +11,7 @@ import React, { useEffect, useReducer } from 'react';
 import Filters from '../../components/Pagefilters/Filters/Filters';
 import { issueDetails, issueReducer } from '../Reducers/issueReducer';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import AdjustIcon from '@mui/icons-material/Adjust';
 import { calcDate } from '../../Utility/date';
 import './issue.css';
 
@@ -67,13 +68,19 @@ const Issues = () => {
                                                 alt="Remy Sharp"
                                                 src={issue?.user.avatar_url}
                                             />
-                                            <p>
-                                                <a
-                                                    href={`/issues/${issue.number}`}
-                                                >
-                                                    {issue?.title}
-                                                </a>
-                                            </p>
+                                            <Tooltip
+                                                title={`
+                                            ${issue?.title}`}
+                                                placement="top"
+                                            >
+                                                <p>
+                                                    <a
+                                                        href={`/issues/${issue?.number}`}
+                                                    >
+                                                        {issue?.title}
+                                                    </a>
+                                                </p>
+                                            </Tooltip>
                                             <a href={`/issues/${issue.number}`}>
                                                 <ChatBubbleIcon />
                                                 <span>{issue?.comments}</span>

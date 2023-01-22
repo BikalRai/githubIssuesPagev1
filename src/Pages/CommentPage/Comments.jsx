@@ -20,6 +20,16 @@ const Comments = () => {
                 `https://api.github.com/repos/facebook/react/issues/${issueNumber}/comments`
             );
             dispatch({ type: 'FETCH_COMMENTS_SUCCESS', payload: commentsData });
+
+            const userPost = await axios.post(
+                `https://api.github.com/markdown`,
+                {
+                    text: issue.body,
+                }
+            );
+            dispatch({ type: 'GET_HTML_DATA', payload: userPost });
+
+            console.log(userPost, 'user conts');
         } catch (error) {
             dispatch({ type: 'FETCH_COMMENTS_ERROR', payload: error });
         }
@@ -30,7 +40,11 @@ const Comments = () => {
     useEffect(() => {
         getComments();
     }, []);
-    return <></>;
+    return (
+        <>
+            <p color="#fff">{singleIssue.userContent.data}</p>
+        </>
+    );
 };
 
 export default Comments;

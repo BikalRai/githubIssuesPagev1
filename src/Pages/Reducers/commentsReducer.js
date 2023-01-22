@@ -3,6 +3,7 @@ const commentState = {
     error: '',
     issue: [],
     comments: [],
+    userContent: [],
 };
 
 const commentReducer = (state, action) => {
@@ -27,6 +28,13 @@ const commentReducer = (state, action) => {
                 loading: false,
                 error: 'Ooops! Something went wrong!',
                 comments: [],
+            };
+        case 'GET_HTML_DATA':
+            return {
+                ...state,
+                loading: false,
+                error: 'Ooops! Something went wrong!',
+                userContent: action.payload,
             };
         default:
             return state;
