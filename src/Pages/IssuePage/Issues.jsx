@@ -11,6 +11,7 @@ import React, { useEffect, useReducer } from 'react';
 import Filters from '../../components/Pagefilters/Filters/Filters';
 import { issueDetails, issueReducer } from '../Reducers/issueReducer';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import { calcDate } from '../../Utility/date';
 import './issue.css';
 
 const Issues = () => {
@@ -43,7 +44,7 @@ const Issues = () => {
 
     useEffect(() => {
         getIssues();
-    }, []);
+    }, [page]);
 
     console.log(issueData, 'issues in isses page');
 
@@ -66,39 +67,49 @@ const Issues = () => {
                                                 alt="Remy Sharp"
                                                 src={issue?.user.avatar_url}
                                             />
-                                            <p>{issue?.title}</p>
-                                            <ChatBubbleIcon />
-                                            <span>2</span>
+                                            <p>
+                                                <a
+                                                    href={`/issues/${issue.number}`}
+                                                >
+                                                    {issue?.title}
+                                                </a>
+                                            </p>
+                                            <a href={`/issues/${issue.number}`}>
+                                                <ChatBubbleIcon />
+                                                <span>{issue?.comments}</span>
+                                            </a>
                                         </div>
                                         <div className="issue-created">
-                                            <p>created at</p>
+                                            <p>{`#${
+                                                issue.number
+                                            } opened ${calcDate(
+                                                issue.created_at
+                                            )} by ${issue.user.login}`}</p>
                                         </div>
                                         <div className="issue-labels">
                                             {issue?.labels?.map(
                                                 (label, index) => {
                                                     return (
-                                                        <>
-                                                            <Tooltip
-                                                                title={
-                                                                    label.description
+                                                        <Tooltip
+                                                            title={
+                                                                label.description
+                                                            }
+                                                            key={index}
+                                                        >
+                                                            <Chip
+                                                                label={
+                                                                    label.name
                                                                 }
-                                                            >
-                                                                <Chip
-                                                                    key={index}
-                                                                    label={
-                                                                        label.name
-                                                                    }
-                                                                    sx={{
-                                                                        background: `#${label.color}`,
-                                                                        marginRight:
-                                                                            '0.5rem',
-                                                                        color: 'rgb(10, 10, 150, 0.8)',
-                                                                        fontWeight:
-                                                                            'bold',
-                                                                    }}
-                                                                />
-                                                            </Tooltip>
-                                                        </>
+                                                                sx={{
+                                                                    background: `#${label.color}`,
+                                                                    marginRight:
+                                                                        '0.5rem',
+                                                                    color: 'rgb(10, 10, 150, 0.8)',
+                                                                    fontWeight:
+                                                                        'bold',
+                                                                }}
+                                                            />
+                                                        </Tooltip>
                                                     );
                                                 }
                                             )}

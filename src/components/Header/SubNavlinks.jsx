@@ -31,7 +31,7 @@ const SubNavlinks = () => {
                 <Grid item mr={2} className="sub__navlinks">
                     <Grid container py={1}>
                         <AdjustIcon className="color-white" />
-                        <Link>
+                        <Link to="/issues">
                             <Typography
                                 ml={1}
                                 className="color-white sub-navlink"

@@ -22,6 +22,8 @@ const issueReducer = (state, action) => {
         case 'CHANGING_PAGE':
             return {
                 ...state,
+                loading: false,
+                error: '',
                 page: action.payload,
             };
         default:
