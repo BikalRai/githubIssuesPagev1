@@ -20,14 +20,43 @@ const Comments = () => {
                 `https://api.github.com/repos/facebook/react/issues/${issueNumber}/comments`
             );
             dispatch({ type: 'FETCH_COMMENTS_SUCCESS', payload: commentsData });
+            console.log(commentsData, ' comments');
+
+            const token = `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`;
+            const config = {
+                headers: { Authorization: `Bearer ${token}` },
+            };
+
+            const { data } = commentsData.map((comment) =>
+                axios.post(
+                    `https://api.github.com/markdown`,
+                    {
+                        text: comment.body,
+                    },
+                    config
+                )
+            );
+
+            console.log(data, 'welcome!!!');
 
             const userPost = await axios.post(
                 `https://api.github.com/markdown`,
                 {
                     text: issue.body,
                 }
+                // {
+                //     headers: {
+                //         Authorization: `Basic ${token}`,
+                //     },
+                // }
             );
             dispatch({ type: 'GET_HTML_DATA', payload: userPost });
+
+            // commentsData.map(async (comment) => {
+            //     await axios.post(`https://api.github.com/markdown`, {
+            //         text: comment.body,
+            //     });
+            // });
 
             console.log(userPost, 'user conts');
         } catch (error) {
@@ -42,7 +71,13 @@ const Comments = () => {
     }, []);
     return (
         <>
-            <p color="#fff">{singleIssue.userContent.data}</p>
+            <div
+                dangerouslySetInnerHTML={{
+                    __html: singleIssue.userContent.data,
+                }}
+            />
+
+            {/* <p color="#fff">{singleIssue.userContent.data}</p> */}
         </>
     );
 };
