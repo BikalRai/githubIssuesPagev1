@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import './navbar.css';
 import { Link } from 'react-router-dom';
 import CodeIcon from '@mui/icons-material/Code';
@@ -12,11 +12,25 @@ import GppMaybeIcon from '@mui/icons-material/GppMaybe';
 import SsidChartIcon from '@mui/icons-material/SsidChart';
 
 const SubNavlinks = () => {
+    const [active, setActive] = useState(true);
+
+    const handleActive = () => {
+        setActive(!active);
+    };
+
     return (
         <>
             <Grid container pt={5} px={10}>
-                <Grid item mr={2} className="sub__navlinks">
-                    <Grid container className="active" py={1}>
+                <Grid
+                    item
+                    mr={2}
+                    className={`sub__navlinks ${active ? '' : 'active'}`}
+                >
+                    <Grid
+                        container
+                        py={1}
+                        className={` ${active ? '' : 'active'}`}
+                    >
                         <CodeIcon className="color-white" />
                         <Link>
                             <Typography

@@ -2,7 +2,7 @@ import React from 'react';
 import Footer from '../Footer/Footer';
 import Headertags from '../Header/Headertags';
 import Navbar from '../Header/Navbar';
-import SubNavlinks from '../Header/SubNavlinks';
+import SubNavLinks from '../../components/Header/SubNavlinks';
 
 const Layout = ({ children }) => {
     return (
@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
             {/* header section */}
             <Navbar />
             <Headertags />
-            <SubNavlinks />
+            <SubNavLinks />
 
             {/* content */}
             {children}

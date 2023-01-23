@@ -13,7 +13,9 @@ import { issueDetails, issueReducer } from '../Reducers/issueReducer';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import AdjustIcon from '@mui/icons-material/Adjust';
 import { calcDate } from '../../Utility/date';
+import spin from '../../assets/spin.gif';
 import './issue.css';
+import Searchbar from '../../components/Searchbar/Searchbar';
 
 const Issues = () => {
     const [issueData, dispatch] = useReducer(issueReducer, issueDetails);
@@ -45,98 +47,112 @@ const Issues = () => {
 
     useEffect(() => {
         getIssues();
-    }, [page]);
+    }, []);
 
     console.log(issueData, 'issues in isses page');
 
     return (
         <>
+            <Searchbar />
             <main>
-                <Grid>
-                    <Filters />
-                    <div className="issues">
-                        {issueData?.issues
-                            ?.slice(
-                                page * rowsPerPage - rowsPerPage,
-                                page * rowsPerPage
-                            )
-                            .map((issue, index) => {
-                                return (
-                                    <div className="issue__card" key={index}>
-                                        <div className="issue-header">
-                                            <Avatar
-                                                alt="Remy Sharp"
-                                                src={issue?.user.avatar_url}
-                                            />
-                                            <Tooltip
-                                                title={`
-                                            ${issue?.title}`}
-                                                placement="top"
-                                            >
-                                                <p>
-                                                    <a
-                                                        href={`/issues/${issue?.number}`}
-                                                    >
-                                                        {issue?.title}
-                                                    </a>
-                                                </p>
-                                            </Tooltip>
-                                            <a href={`/issues/${issue.number}`}>
-                                                <ChatBubbleIcon />
-                                                <span>{issue?.comments}</span>
-                                            </a>
-                                        </div>
-                                        <div className="issue-created">
-                                            <p>{`#${
-                                                issue.number
-                                            } opened ${calcDate(
-                                                issue.created_at
-                                            )} by ${issue.user.login}`}</p>
-                                        </div>
-                                        <div className="issue-labels">
-                                            {issue?.labels?.map(
-                                                (label, index) => {
-                                                    return (
-                                                        <Tooltip
-                                                            title={
-                                                                label.description
-                                                            }
-                                                            key={index}
-                                                        >
-                                                            <Chip
-                                                                label={
-                                                                    label.name
-                                                                }
-                                                                sx={{
-                                                                    background: `#${label.color}`,
-                                                                    marginRight:
-                                                                        '0.5rem',
-                                                                    color: 'rgb(10, 10, 150, 0.8)',
-                                                                    fontWeight:
-                                                                        'bold',
-                                                                }}
-                                                            />
-                                                        </Tooltip>
-                                                    );
-                                                }
-                                            )}
-                                        </div>
-                                    </div>
-                                );
-                            })}
-
-                        <Pagination
-                            className="pagination"
-                            count={Math.ceil(
-                                issueData.issues.length / rowsPerPage
-                            )}
-                            variant="outlined"
-                            shape="rounded"
-                            color="info"
-                            onChange={handlePage}
-                        />
+                {issueData.loading ? (
+                    <div className="loader__container">
+                        <img src={spin} alt="loader" />
                     </div>
-                </Grid>
+                ) : (
+                    <Grid>
+                        <Filters />
+                        <div className="issues">
+                            {issueData?.issues
+                                ?.slice(
+                                    page * rowsPerPage - rowsPerPage,
+                                    page * rowsPerPage
+                                )
+                                .map((issue, index) => {
+                                    return (
+                                        <div
+                                            className="issue__card"
+                                            key={index}
+                                        >
+                                            <div className="issue-header">
+                                                <Avatar
+                                                    alt="Remy Sharp"
+                                                    src={issue?.user.avatar_url}
+                                                />
+                                                <Tooltip
+                                                    title={`
+                                            ${issue?.title}`}
+                                                    placement="top"
+                                                >
+                                                    <p>
+                                                        <a
+                                                            href={`/issues/${issue?.number}`}
+                                                        >
+                                                            {issue?.title}
+                                                        </a>
+                                                    </p>
+                                                </Tooltip>
+                                                <a
+                                                    href={`/issues/${issue.number}`}
+                                                >
+                                                    <ChatBubbleIcon />
+                                                    <span>
+                                                        {issue?.comments}
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div className="issue-created">
+                                                <p>{`#${
+                                                    issue.number
+                                                } opened ${calcDate(
+                                                    issue.created_at
+                                                )} by ${issue.user.login}`}</p>
+                                            </div>
+                                            <div className="issue-labels">
+                                                {issue?.labels?.map(
+                                                    (label, index) => {
+                                                        return (
+                                                            <Tooltip
+                                                                title={
+                                                                    label.description
+                                                                }
+                                                                key={index}
+                                                            >
+                                                                <Chip
+                                                                    label={
+                                                                        label.name
+                                                                    }
+                                                                    sx={{
+                                                                        background: `#${label.color}`,
+                                                                        marginRight:
+                                                                            '0.5rem',
+                                                                        color: 'rgb(10, 10, 150, 0.8)',
+                                                                        fontWeight:
+                                                                            'bold',
+                                                                    }}
+                                                                />
+                                                            </Tooltip>
+                                                        );
+                                                    }
+                                                )}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+
+                            <Pagination
+                                className="pagination"
+                                count={Math.ceil(
+                                    issueData.issues.length / rowsPerPage
+                                )}
+                                variant="outlined"
+                                shape="rounded"
+                                color="info"
+                                onChange={handlePage}
+                            />
+                        </div>
+                    </Grid>
+                )}
             </main>
         </>
     );
