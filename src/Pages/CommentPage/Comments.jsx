@@ -43,15 +43,16 @@ const Comments = () => {
             );
             dispatch({ type: 'GET_HTML_DATA', payload: userPost });
 
-            // const { data } = singleIssue.comments.map((comment) =>
-            //     axios.post(
-            //         `https://api.github.com/markdown`,
-            //         {
-            //             text: comment.body,
-            //         },
-            //         config
-            //     )
-            // );
+            commentsData.map((comment) =>
+                axios
+                    .post('https://api.github.com/markdown', {
+                        text: comment.body,
+                    })
+                    .then(({ data }) => {
+                        console.log(data, 'getting it!!');
+                        singleIssue.allComments.push(data);
+                    })
+            );
 
             console.log(userPost, 'user conts');
         } catch (error) {
@@ -95,6 +96,18 @@ const Comments = () => {
                             __html: singleIssue?.userContent?.data,
                         }}
                     />
+                    <h1>hey</h1>
+                    {singleIssue.allComments.map((comment, index) => {
+                        return (
+                            <div className="comment-reply" key={index}>
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: comment,
+                                    }}
+                                />
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </>
