@@ -42,7 +42,7 @@ const commentReducer = (state, action) => {
                 ...state,
                 loading: false,
                 error: '',
-                allComments: action.payload,
+                allComments: [state.allComments, ...action.payload],
             };
         default:
             return state;

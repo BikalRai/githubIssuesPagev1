@@ -5,6 +5,7 @@ import { commentState, commentReducer } from '../Reducers/commentsReducer';
 import AdjustIcon from '@mui/icons-material/Adjust';
 import { calcDate } from '../../Utility/date';
 import './comment.css';
+import { Preview } from '@mui/icons-material';
 
 const Comments = () => {
     const [singleIssue, dispatch] = useReducer(commentReducer, commentState);
@@ -25,7 +26,7 @@ const Comments = () => {
             dispatch({ type: 'FETCH_COMMENTS_SUCCESS', payload: commentsData });
             console.log(commentsData, ' comments');
 
-            const token = `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`;
+            const token = `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`;
             const config = {
                 headers: { Authorization: `Bearer ${token}` },
             };
@@ -34,20 +35,24 @@ const Comments = () => {
                 `https://api.github.com/markdown`,
                 {
                     text: issue.body,
-                }
-                // {
-                //     headers: {
-                //         Authorization: `Basic ${token}`,
-                //     },
-                // }
+                },
+                config
             );
             dispatch({ type: 'GET_HTML_DATA', payload: userPost });
 
             commentsData.map((comment) =>
                 axios
-                    .post('https://api.github.com/markdown', {
-                        text: comment.body,
-                    })
+                    .post(
+                        'https://api.github.com/markdown',
+                        {
+                            text: comment.body,
+                        },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        }
+                    )
                     .then(({ data }) => {
                         console.log(data, 'getting it!!');
                         singleIssue.allComments.push(data);
@@ -97,7 +102,7 @@ const Comments = () => {
                         }}
                     />
                     <h1>hey</h1>
-                    {singleIssue.allComments.map((comment, index) => {
+                    {singleIssue?.allComments?.map((comment, index) => {
                         return (
                             <div className="comment-reply" key={index}>
                                 <div
